@@ -1,0 +1,108 @@
+<div class="modal fade" [id]="modalId()" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">			 
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    {{ headerText() }}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="docForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="title">
+                                        Title: <span class="red-asterix"> * </span>
+                                    </label>
+                                    <input formControlName="Title" id="Title" type="text" class="form-control" id="title">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">                        
+                                <div class="form-group">
+                                    <label for="category">
+                                        Category: <span class="red-asterix"> * </span>
+                                    </label>
+                                    <select formControlName="CategoryId" id="Category" class="form-control">
+                                        <option *ngFor="let category of categoryList" [value]="category.id">
+                                            {{ category.value }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div [ngClass]="{'col-md-6': (!scopedToCase || editMode), 'col-md-12': (scopedToCase && !editMode)}">                                                                        
+                                <div class="form-group">
+                                    <label for="description">
+                                        Description:
+                                    </label>
+                                    <textarea formControlName="Description" id="Description" class="form-control" id="description">Description...</textarea>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!scopedToCase || editMode" class="col-md-6">                                    
+                                <div class="form-group">
+                                    <label for="case">
+                                        Case number: <span class="red-asterix"> * </span>
+                                    </label>
+                                    <select formControlName="CaseId" id="CaseId" class="form-control" id="case">
+                                        <option *ngFor="let case of caseList" [value]="case.id">
+                                            {{ case.value }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">				
+                        <div class="col-md-6 col-md-offset-3 uploadSurface">			
+                            <h4 class="text-left text-center">
+                                <strong>Upload Document Below</strong>
+                            </h4>
+                            <div class="image-upload text-center">
+                                <label id="uploadSurface">
+                                    <img class="img-responsive text-center" id="uploadImage" alt="Upload image" src="../../../assets/uploadDocument.png">
+                                    <span><input type="file" name="photoimg" id="photoimg" (change)="onFileChange($event)"></span>
+                                </label>
+                            </div>
+                            <br>
+                            
+                            <div *ngIf="!showFileUploadLabel" class="progress">
+                                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" 
+                                    [attr.aria-valuenow]="uploadProgress" aria-valuemin="0" aria-valuemax="100" 
+                                    [style.width]="uploadProgress + '%'">
+                                    {{ fileToUploadTitle }}
+                                </div>
+                            </div>
+
+                            <div *ngIf="showFileUploadLabel">
+                                {{ fileToUploadTitle }}
+                            </div>
+                        </div>		
+                        <div class="col-md-2"></div>
+                    </div>
+                </form>
+                
+            </div>
+            <div class="modal-footer">
+                <p class="footer-text-left"> 
+                    <span class="red-asterix">*</span> Fields are required! 
+                </p> 
+                <button type="button" class="btn btn-default" (click)="onCancelAction()" data-dismiss="modal" #closeModal>
+                    {{ footerCancelText() }}
+                </button> 
+                <button type="button" class="btn btn-primary" (click)="onConfirmationAction()" [disabled]="!docForm.valid">
+                    {{ footerConfirmationText() }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

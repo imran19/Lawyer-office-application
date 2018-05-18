@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "Host=46.101.178.124;Database=ikarus;Username=postgres;Password=postgres" Npgsql.EntityFrameworkCore.PostgreSQL -f
